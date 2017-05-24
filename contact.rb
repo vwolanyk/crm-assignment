@@ -1,5 +1,9 @@
 class Contact
 
+  attr_accessor :first_name, :last_name, :email, :note
+
+  attr_reader :id
+  
   # This method should initialize the contact's attributes
   def initialize(first_name, last_name, email, note = "N/A")
     @first_name = first_name
