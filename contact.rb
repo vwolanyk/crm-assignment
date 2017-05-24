@@ -18,6 +18,9 @@ class Contact
     @last_name  = last_name
     @email = email
     @note = note
+    @id = @@id
+    @@id += 1
+
   end
 
   # This method should call the initializer,
@@ -26,6 +29,7 @@ class Contact
     new_contact = Contact.new(first_name, last_name, email, note = "N/A")
 
     @@contacts << new_contact
+
     return new_contact
   end
 
@@ -36,7 +40,21 @@ class Contact
 
   # This method should accept an id as an argument
   # and return the contact who has that id
-  def self.find
+  def self.find(id)
+
+    @@contacts.select { |contact| contact.id == id}
+
+  end
+
+  #  should allow you to search for a contact using attributes other than id
+  # by specifying both the name of the attribute and the value
+  # eg. searching for 'first_name', 'Betty' should return the first contact named Betty
+
+
+  def self.find_by(attribute, attribute_value)
+
+    # Send function converts string to symb to call method, cannot use arg to pass through as method
+    @@contacts.select {|contact| contact.send(attribute) == attribute_value}
 
   end
 
@@ -45,14 +63,6 @@ class Contact
   # 2. the new value for that attribute
   # and then make the appropriate change to the contact
   def update
-
-  end
-
-  # This method should work similarly to the find method above
-  # but it should allow you to search for a contact using attributes other than id
-  # by specifying both the name of the attribute and the value
-  # eg. searching for 'first_name', 'Betty' should return the first contact named Betty
-  def self.find_by
 
   end
 
