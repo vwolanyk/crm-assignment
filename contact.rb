@@ -62,12 +62,16 @@ class Contact
   # 1. which of the contact's attributes you want to update
   # 2. the new value for that attribute
   # and then make the appropriate change to the contact
-  def update
-
-  end
+  # def update(attribute, new_value)
+  #
+  #   = new_value
+  #
+  # end
 
   # This method should delete all of the contacts
   def self.delete_all
+
+    @@contacts.clear
 
   end
 
