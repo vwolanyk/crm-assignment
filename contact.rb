@@ -1,9 +1,17 @@
 class Contact
 
+# Attribute methods
+
   attr_accessor :first_name, :last_name, :email, :note
 
   attr_reader :id
-  
+
+# Class Variables
+
+  @@contacts = []
+  @@id = 1000
+
+
   # This method should initialize the contact's attributes
   def initialize(first_name, last_name, email, note = "N/A")
     @first_name = first_name
@@ -14,13 +22,16 @@ class Contact
 
   # This method should call the initializer,
   # store the newly created contact, and then return it
-  def self.create
+  def self.create(first_name, last_name, email, note = "N/A")
+    new_contact = Contact.new(first_name, last_name, email, note = "N/A")
 
+    @@contacts << new_contact
+    return new_contact
   end
 
   # This method should return all of the existing contacts
   def self.all
-
+    @@contacts
   end
 
   # This method should accept an id as an argument
