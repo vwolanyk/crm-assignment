@@ -62,11 +62,18 @@ class Contact
   # 1. which of the contact's attributes you want to update
   # 2. the new value for that attribute
   # and then make the appropriate change to the contact
-  # def update(attribute, new_value)
-  #
-  #   = new_value
-  #
-  # end
+  def update(attribute, new_value)
+
+    case attribute
+    when "first_name"
+      @first_name = new_value
+    when "last_name"
+    when "email"
+      @email = new_value
+    when "note"
+      @note = new_value
+    end
+  end
 
   # This method should delete all of the contacts
   def self.delete_all
@@ -76,6 +83,8 @@ class Contact
   end
 
   def full_name
+
+    return "#{first_name} #{last_name}"
 
   end
 
@@ -88,3 +97,9 @@ class Contact
   # Feel free to add other methods here, if you need them.
 
 end
+joe = Contact.create("joe", "joe", "dd@dd.com")
+betty = Contact.create("Betty", "Davis", "bd@bd.com", "Eyes")
+
+ p betty.update("first_name", "Bets")
+
+ p Contact.all
