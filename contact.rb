@@ -42,8 +42,13 @@ class Contact
   # and return the contact who has that id
   def self.find(id)
 
-    @@contacts.select { |contact| contact.id == id}
-
+    result = @@contacts.select {|contact| contact.id == id }
+    return result[0]
+    #  @@contacts.each do |contact|
+    #     if contact.id == id
+    #       return contact
+    #     end
+    #   end
   end
 
   #  should allow you to search for a contact using attributes other than id
@@ -54,7 +59,9 @@ class Contact
   def self.find_by(attribute, attribute_value)
 
     # Send function converts string to symb to call method, cannot use arg to pass through as method
-    @@contacts.select {|contact| contact.send(attribute) == attribute_value}
+    result = @@contacts.select {|contact|
+      contact.send(attribute) == attribute_value}
+      return result[0]
 
   end
 
@@ -84,7 +91,7 @@ class Contact
 
   def full_name
 
-    return "#{first_name} #{last_name}"
+    "#{first_name} #{last_name}"
 
   end
 
@@ -97,10 +104,15 @@ class Contact
   end
 
   # Feel free to add other methods here, if you need them.
+  def display_contact_info
+
+     puts "ID: #{id} NAME: #{full_name} EMAIL: #{email}"
+     puts "NOTES: #{note}"
+  end
 
 end
-joe = Contact.create("joe", "joe", "dd@dd.com")
-betty = Contact.create("Betty", "Davis", "bd@bd.com", "Eyes")
+Contact.create("joe", "joe", "dd@dd.com")
+Contact.create("Betty", "Davis", "bd@bd.com", "Eyes")
 
  # p betty.update("first_name", "Bets")
  #

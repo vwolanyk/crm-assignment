@@ -1,9 +1,11 @@
 class CRM
 
-require_relative './contact.rb'
+require_relative 'contact.rb'
 
-  def initialize
 
+
+  def initialize(name)
+    @crm_name = name
   end
 
   def main_menu
@@ -15,9 +17,11 @@ require_relative './contact.rb'
   end
 
   def print_main_menu
-    puts"******************"
-    puts "Welcome to CRM"
-    puts"******************"
+    puts ""
+    puts"***********************************"
+    puts "Welcome to CRM: #{@crm_name.upcase}"
+    puts"************************************"
+    puts ""
     puts '[1] Add a new contact'
     puts '[2] Modify an existing contact'
     puts '[3] Delete a contact'
@@ -25,6 +29,29 @@ require_relative './contact.rb'
     puts '[5] Search by attribute'
     puts '[6] Exit'
     puts 'Enter a number: '
+  end
+
+  def choose_attribute
+    puts "[1] First Name"
+    puts "[2] Last Name"
+    puts "[3] Email"
+    puts "[4] Note"
+    puts "[5] Exit"
+    puts "Enter Number: "
+    choice = gets.chomp.to_i
+
+    case choice
+    when 1
+       attribute = "first_name"
+    when 2
+      attribute = "last_name"
+    when 3
+       attribute = "email"
+     when 4
+       attribute = "note"
+     when 5 then main_menu
+     end
+     return attribute
   end
 
   def call_option(user_selected)
@@ -42,7 +69,8 @@ require_relative './contact.rb'
   end
 
   def add_new_contact
-
+    puts ""
+    puts ""
     puts "New Contact Info"
     puts "****************"
 
@@ -59,58 +87,64 @@ require_relative './contact.rb'
     print "Additional Info(press enter if none): "
     note = gets.chomp
 
-    Contact.create(first_name,last_name, email, note)
+
+    new_contact = Contact.create(first_name,last_name, email, note)
+
+    puts " "
+    puts "** ADDED:"
+
+    new_contact.display_contact_info
+
 
   end
 
   def modify_existing_contact
     puts "Please Enter ID Number of Contact you wish to Modify"
-    puts "OR ? to get a list of contacts"
-    option = gets.chomp
-      if option == "?"
-       display_all_contacts
+    puts "OR ENTER ? to get a list of contacts"
+    id = gets.chomp
 
+      if id == "?"
+       display_all_contacts
        puts "**"
        puts "Enter ID of Contact you wish to Modify:"
-       id = gets.chomp
-       modifier = Contact.find(id)
-     else
-       modifier = Contact.find(option)
+       id = gets.chomp.to_i
+       contact = Contact.find(id)
+     else contact = Contact.find(id.to_i)
      end
 
-     puts "What would you like to modify about #{modifier} ?"
-     puts "[1] First Name"
-     puts "[2] Last Name"
-     puts "[3] Email"
-     puts "[4] Note"
-     puts "[5] Exit"
-     puts "Enter Number: "
-     choice = gets.chomp
 
 
-     case choice
-     when 1
-        attribute = "first_name"
-        puts "New First Name:"
-     when 2
-       attribute = "last_name"
-       puts "New Last Name: "
-     when 3
-        attribute = "email"
-        puts "New Email Address:"
-      when 4
-        attribute = "note"
-        puts "New Note: "
-      when 5 then main_menu
-      end
-      value = gets.chomp
+     puts "What would you like to modify about #{ contact.full_name }?"
 
-      modifier.update(attribute,value)
+     attribute = choose_attribute
 
+     puts "Enter New #{attribute.upcase.tr("_"," ")}:"
+     value = gets.chomp
+
+      contact.update(attribute,value)
+      puts "#{contact.first_name}'s #{attribute.upcase} has been updated"
 
   end
 
   def delete_contact
+    puts "Enter ID of Contact you would like to DELETE:"
+    puts "*** OR ENTER ? for a list of contacts ***"
+    id = gets.chomp
+    if id == "?"
+      display_all_contacts
+      puts "Enter ID of Contact you would like to DELETE:"
+      id = gets.chomp
+    end
+    contact = Contact.find(id.to_i)
+
+    puts "Are You Sure you want to delete #{contact.first_name}? (Y or N)"
+    confirm = gets.chomp.upcase
+
+    if confirm == "Y" || "YES"
+      contact.delete
+      puts "Contact DELETED"
+    else main_menu
+    end
 
   end
 
@@ -123,12 +157,24 @@ require_relative './contact.rb'
   end
 
   def search_by_attribute
+    puts "Which Category would you like to SEARCH by?"
+
+    choose_attribute
+
+  puts "Search Term:"
+  value = gets.chomp
+
+  contact = Contact.find_by(attribute, value)
+
+  contact.display_contact_info
+
+
 
   end
 
 
 end
 
-my_crm = CRM.new
+my_crm = CRM.new("Vigilante Vixen")
 
 my_crm.main_menu
