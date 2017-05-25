@@ -71,7 +71,7 @@ class Contact
     when "email"
       @email = new_value
     when "note"
-      @note = new_value
+       @note = new_value
     end
   end
 
@@ -93,7 +93,7 @@ class Contact
   def delete
 
     @@contacts.delete(self)
-    
+
   end
 
   # Feel free to add other methods here, if you need them.
@@ -102,10 +102,10 @@ end
 joe = Contact.create("joe", "joe", "dd@dd.com")
 betty = Contact.create("Betty", "Davis", "bd@bd.com", "Eyes")
 
- p betty.update("first_name", "Bets")
-
- p Contact.all
-
- betty.delete
-
- p Contact.all
+ # p betty.update("first_name", "Bets")
+ #
+ # p Contact.all
+ #
+ # betty.delete
+ #
+ # p Contact.all

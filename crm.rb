@@ -1,5 +1,6 @@
 class CRM
 
+require_relative './contact.rb'
 
   def initialize
 
@@ -42,9 +43,70 @@ class CRM
 
   def add_new_contact
 
+    puts "New Contact Info"
+    puts "****************"
+
+    puts ""
+    print "Enter First Name: "
+    first_name = gets.chomp
+
+    print "Enter Last Name: "
+    last_name = gets.chomp
+
+    print "Enter Email Address: "
+    email = gets.chomp
+
+    print "Additional Info(press enter if none): "
+    note = gets.chomp
+
+    Contact.create(first_name,last_name, email, note)
+
   end
 
   def modify_existing_contact
+    puts "Please Enter ID Number of Contact you wish to Modify"
+    puts "OR ? to get a list of contacts"
+    option = gets.chomp
+      if option == "?"
+       display_all_contacts
+
+       puts "**"
+       puts "Enter ID of Contact you wish to Modify:"
+       id = gets.chomp
+       modifier = Contact.find(id)
+     else
+       modifier = Contact.find(option)
+     end
+
+     puts "What would you like to modify about #{modifier} ?"
+     puts "[1] First Name"
+     puts "[2] Last Name"
+     puts "[3] Email"
+     puts "[4] Note"
+     puts "[5] Exit"
+     puts "Enter Number: "
+     choice = gets.chomp
+
+
+     case choice
+     when 1
+        attribute = "first_name"
+        puts "New First Name:"
+     when 2
+       attribute = "last_name"
+       puts "New Last Name: "
+     when 3
+        attribute = "email"
+        puts "New Email Address:"
+      when 4
+        attribute = "note"
+        puts "New Note: "
+      when 5 then main_menu
+      end
+      value = gets.chomp
+
+      modifier.update(attribute,value)
+
 
   end
 
@@ -53,6 +115,10 @@ class CRM
   end
 
   def display_all_contacts
+
+    Contact.all.each do |contact| print "ID: #{contact.id}  NAME: #{contact.full_name} EMAIL: #{contact.email}"
+      puts "Notes: #{contact.note}"
+    end
 
   end
 
