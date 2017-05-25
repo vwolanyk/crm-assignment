@@ -92,6 +92,8 @@ class Contact
   # HINT: Check the Array class docs for built-in methods that might be useful here
   def delete
 
+    @@contacts.delete(self)
+    
   end
 
   # Feel free to add other methods here, if you need them.
@@ -101,5 +103,9 @@ joe = Contact.create("joe", "joe", "dd@dd.com")
 betty = Contact.create("Betty", "Davis", "bd@bd.com", "Eyes")
 
  p betty.update("first_name", "Bets")
+
+ p Contact.all
+
+ betty.delete
 
  p Contact.all
