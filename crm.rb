@@ -175,6 +175,10 @@ require_relative 'contact.rb'
 
 end
 
-my_crm = CRM.new("Vigilante Vixen")
+at_exit do
+  ActiveRecord::Base.connection.close
+end
 
-my_crm.main_menu
+# my_crm = CRM.new("Vigilante Vixen")
+#
+# my_crm.main_menu
