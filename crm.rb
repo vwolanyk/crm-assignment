@@ -119,12 +119,12 @@ require_relative 'contact.rb'
 
      puts "What would you like to modify about #{ contact.full_name }?"
 
-     attribute = choose_attribute
+     attribute = gets.chomp
 
      puts "Enter New #{attribute.upcase.tr("_"," ")}:"
      value = gets.chomp
 
-      contact.update(attribute,value)
+      contact.update_attribute(attribute,value)
       puts "#{contact.first_name}'s #{attribute.upcase} has been updated"
 
   end
@@ -162,14 +162,16 @@ require_relative 'contact.rb'
 
   def search_by_attribute
     puts "Which Category would you like to SEARCH by?"
-    attribute = gets.chomp
+    attribute = gets.chomp.to_sym
 
   puts "Search Term:"
   value = gets.chomp
 
-  contact = Contact.find_by(attribute, value)
+  arg = {attribute => value}
 
-  p contact
+p Contact.find_by(arg)
+
+
 
 
 
