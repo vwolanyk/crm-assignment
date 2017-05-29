@@ -98,7 +98,7 @@ require_relative 'contact.rb'
 # UPDATES CONTACT INFO IN DATABASE
       contact.update_attribute(attribute,value)
 # VISUAL display update occured
-      puts "#{contact.first_name}'s #{attribute.upcase} has been updated"
+      p "#{contact.first_name}'s #{attribute.upcase} has been updated"
 
   end
 
@@ -120,11 +120,11 @@ require_relative 'contact.rb'
     puts "Are You Sure you want to delete #{contact.first_name}? (Y or N)"
     confirm = gets.chomp.upcase
 
-    if confirm == "Y" || "YES"
+    if confirm == "Y" ||  confirm == "YES"
 
 # CONTACT DELETED HERE
       contact.delete
-      puts "Contact DELETED"
+      p "Contact DELETED"
     else main_menu
     end
 
