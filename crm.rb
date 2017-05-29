@@ -42,13 +42,13 @@ require_relative 'contact.rb'
 
     case choice
     when 1
-       attribute = "first_name"
+       attribute = :first_name
     when 2
-      attribute = "last_name"
+      attribute = :last_name
     when 3
-       attribute = "email"
+       attribute = :email
      when 4
-       attribute = "note"
+       attribute = :note
      when 5 then main_menu
      end
      return attribute
@@ -88,12 +88,15 @@ require_relative 'contact.rb'
     note = gets.chomp
 
 
-    new_contact = Contact.create(first_name,last_name, email, note)
+    contact = Contact.create(first_name: first_name,
+  last_name:  last_name,
+  email:      email,
+  note:       note)
 
     puts " "
-    puts "** ADDED:"
+    puts "Contact Successfully Added"
 
-    new_contact.display_contact_info
+
 
 
   end
@@ -150,23 +153,23 @@ require_relative 'contact.rb'
 
   def display_all_contacts
 
-    Contact.all.each do |contact| print "ID: #{contact.id}  NAME: #{contact.full_name} EMAIL: #{contact.email}"
-      puts "Notes: #{contact.note}"
-    end
+    p Contact.all
+    # Contact.all.each do |contact| print "ID: #{contact.id}  NAME: #{contact.full_name} EMAIL: #{contact.email}"
+    #   puts "Notes: #{contact.note}"
+
 
   end
 
   def search_by_attribute
     puts "Which Category would you like to SEARCH by?"
-
-    choose_attribute
+    attribute = gets.chomp
 
   puts "Search Term:"
   value = gets.chomp
 
   contact = Contact.find_by(attribute, value)
 
-  contact.display_contact_info
+  p contact
 
 
 
